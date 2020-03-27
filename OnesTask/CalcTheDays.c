@@ -17,7 +17,7 @@ int main()
 	int reFeb;
 	int sum;
 
-	getInput();
+	date=getInput();
 	reFeb=JudgeLeapYear(date);
 	sum=CalcSum(date,reFeb);
 
@@ -34,6 +34,9 @@ DATE getInput()
 	date.year=Y;
 	date.month=M;
 	date.day=D;
+	//检查一下接收：
+	//printf("%d %d %d",date.year,date.month,date.day);
+	printf("接收正确\n");
 	return date;
 }
 
@@ -65,7 +68,7 @@ int CalcSum(DATE date,int reFeb)
 		{
 			addFactor=date.month/2;
 		}
-		sum=(date.month-1)*30+addFactor-reFeb;
+		sum=(date.month-1)*30+addFactor-reFeb+date.day;
 	}
 	else
 	{
