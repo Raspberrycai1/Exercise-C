@@ -40,8 +40,8 @@ int main()
 	PSTU pHeadB = (PSTU)malloc(sizeof(STU));
 
 	getInput(pHeadA,pHeadB);
-	//ListMerge(pHeadA,pHeadB);
-	//ListSort(pHeadA);
+	ListMerge(pHeadA,pHeadB);
+	ListSort(pHeadA);
 	traverseList(pHeadA);
 
 	return 0;
@@ -91,20 +91,30 @@ void ListMerge(PSTU pHeadA, PSTU pHeadB)
 	p->pNext = r;
 }
 
+//按学号升序排列:冒泡排序
 void ListSort(PSTU pHead)
 {
-	//需要知道链表长度？
-	int len=0;
-	PSTU p = pHead->pNext;
-	while(NULL != p)
-	{
-		len++;
-	}
+	//需要知道链表长度？不用
+	PSTU p,q;	
+	for( p=pHead->pNext; NULL != p; p=p->pNext)
+		for(q=p->pNext; NULL != q; q=q->pNext)
+		{
+			if(p->sid > q->sid)
+			{
+				int temp1 = p->score;
+				p->score = q->score;
+				q->score = temp1;
+
+				int temp2 = p->sid;
+				p->sid = q->sid;
+				q->sid = temp2;
+			}
+		}
 }
-//多输出一行0 0,不知是哪里的
+//多输出一行0 0,那是pHead
 void traverseList(PSTU pHeadA)
 {
-	PSTU p = pHeadA;
+	PSTU p = pHeadA->pNext;
 	while(NULL != p)
 	{
 		printf("%d %d\n",p->sid,p->score);
