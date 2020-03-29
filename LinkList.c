@@ -1,4 +1,4 @@
-//郝斌 30P
+//郝斌 24_链表创建和链表遍历算法的演示
 # include <stdio.h>
 # include <malloc.h>
 # include <stdlib.h>
@@ -52,7 +52,7 @@ PNODE create_list()
 	{
 		printf("请输入第%d个节点的值",i+1);
 		scanf("%d",&val);
-
+		//每次都声明定义
 		PNODE pNew = (PNODE)malloc(sizeof(NODE));
 
 		if (NULL == pHead)
