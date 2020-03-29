@@ -33,7 +33,7 @@ void Print(int*);
 
 int main()
 {
-	int* num10;
+	int* num10 = (int*)malloc(sizeof(int)*10);
 	printf("Please input 10 numbers(seperate with space):\n");
 	num10=Input10();
 	ChangePos(num10);
@@ -47,7 +47,8 @@ int* Input10()
 	//int i;
 	int* num10=(int*)malloc(sizeof(int)*10);
 	//用scanf
-	scanf("%d %d %d %d %d %d %d %d %d %d",&num10[0],&num10[1],&num10[2],&num10[3],&num10[4],&num10[5],&num10[6],&num10[7],&num10[8],&num10[9]);
+	scanf("%d %d %d %d %d %d %d %d %d %d",&num10[0],&num10[1],\
+		&num10[2],&num10[3],&num10[4],&num10[5],&num10[6],&num10[7],&num10[8],&num10[9]);
 	/*
 	for(i=0; i<10; i++)
 	{
@@ -68,7 +69,7 @@ int* Input10()
 int* ChangePos(int* num10)
 {
 	int i;
-	int maxId=0,minId=0;
+	int maxId=0,minId=0;//假定最大最小都是第1个数
 	int temp;
 	for(i=0;i<10;i++)
 	{
@@ -81,6 +82,7 @@ int* ChangePos(int* num10)
 			maxId=i;
 		}
 	}
+	//找到最大最小之后,换位置
 	temp = num10[0];
 	num10[0] = num10[minId];
 	num10[minId] = temp;
@@ -91,7 +93,7 @@ int* ChangePos(int* num10)
 
 	return num10;
 }
-
+//输出10个数
 void Print(int* num10)
 {
 	int i;
