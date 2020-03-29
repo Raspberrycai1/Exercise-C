@@ -48,7 +48,8 @@ void getInput(PSTU pArr,int N)
 	for(i=0; i<N; i++)
 	{		
 		printf("请输入第%d个学生的学号,姓名和3门成绩:",i+1);
-		scanf("%d %s %d %d %d",&pArr[i].sid,pArr[i].name,&pArr[i].score[0],&pArr[i].score[1],&pArr[i].score[2]);
+		scanf("%d %s %d %d %d",&pArr[i].sid,pArr[i].name,\
+				&pArr[i].score[0],&pArr[i].score[1],&pArr[i].score[2]);
 	}
 }
 //计算并打印三科平均分
@@ -93,5 +94,6 @@ void printTotalMax(PSTU pArr, int N)
 			}
 		}
 	}
-	printf("%d %s %d %d %d\n",pArr[N-1].sid,pArr[N-1].name,pArr[N-1].score[0],pArr[N-1].score[1],pArr[N-1].score[2]);
+	printf("%d %s %d %d %d\n",pArr[N-1].sid,pArr[N-1].name,\
+			pArr[N-1].score[0],pArr[N-1].score[1],pArr[N-1].score[2]);
 }
