@@ -33,13 +33,35 @@ ____<______  ____<>____>__ __________ _>_________ __________ __________ ________
 8 -10 12 -20 -99
 */
 # include <stdio.h>
+# include <malloc.h>
 
 int main(void)
 {
-	int n;
+	int i, N;
+	int nNeg=0;
+	int* pHead;
 	printf("请输入一共几只蚂蚁(1<n<50)：");
-	scanf("%d",&n);
-
+	scanf("%d",&N);
 	
+	pHead = (int*)malloc(sizeof(int)*N);
+
+	printf("\n请输入%d只蚂蚁的位置:\n",N);
+	for(i=0; i<N; i++)
+	{
+		
+		scanf("%d", &pHead[i]);
+		//判断正负
+		if(pHead[i]<0)
+		{
+			++nNeg;
+		}
+		//判断是否接收到了回车
+		char c = getchar();
+		if(c == '\n')
+		{
+			break;
+		}
+	}
+	printf("一共有%d只蚂蚁被感染\n",nNeg+1);
 	return 0;
 }
