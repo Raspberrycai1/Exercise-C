@@ -45,7 +45,7 @@ int main(void)
 		subtract(num_4);
 		NE = equal(num_4); //判断是否等于6174
 	}
-	printf("%d",times);
+	printf("%d\n",times);
 	return 0;
 }
 void get4nums(int* num_4)
