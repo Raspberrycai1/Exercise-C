@@ -38,13 +38,15 @@
 //先输出5位数
 //再输出6位数
 //2/3层循环嵌套
+//排序：先变成整数，再放数组里,再排序（int的范围是+-2147483647）
 
 # include <stdio.h>
+# include <stdlib.h>
 
 int main(void)
 {
-	int max=2147483647;
-	int N,i,j,k;
+	int N,i,j,k,n=0,temp;
+	int* arr=(int*)malloc(sizeof(int)*100);
 	printf("请输入N=");
 	scanf("%d",&N);
 
@@ -57,15 +59,37 @@ int main(void)
 				//判断5位数
 				if(N == 2*(i+j)+k)
 				{
-					printf("%d%d%d%d%d\n",i,j,k,j,i);
+					//printf("%d%d%d%d%d\n",i,j,k,j,i);
+					//变整数：
+					arr[n]=i*10000+j*1000+k*100+j*10+i;
+					n++;
 				}
 				if(N == 2*(i+j+k))
 				{
-					printf("%d%d%d%d%d%d\n",i,j,k,k,j,i);
+					//printf("%d%d%d%d%d%d\n",i,j,k,k,j,i);
+					//变整数
+					arr[n]=i*100000+j*10000+k*1000+k*100+j*10+i;
+					n++;
 				}
 			}
 		}
 	}
-	//printf("intmax=%d",max);
+
+	//排序：
+	for(i=0; i<n-1; i++)
+		for(j=0; j<n-1-i; j++)
+		{
+			if(arr[j]>arr[j+1])
+			{
+				temp = arr[j];
+				arr[j] = arr[j+1];
+				arr[j+1] = temp;
+			}
+		}
+	printf("数组arr:\n");
+	for(i=0; i<n; i++)
+	{
+		printf("%d\n",arr[i]);
+	}
 	return 0;
 }
