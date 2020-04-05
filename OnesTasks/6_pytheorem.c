@@ -28,7 +28,7 @@ PABC getABC()
 	int count=0;
 	int a=3,b=4,c=5;
 	int sum=a+b+c;
-	int len=10;
+	int len=100;
 
 	PABC pHead = (PABC)malloc(sizeof(ABC)*len);
 	if(NULL == pHead)
@@ -54,7 +54,7 @@ PABC getABC()
 
 				if(count>=len)
 				{
-					PABC pHead=(PABC)realloc(pHead, 2*len*sizeof(ABC));
+					PABC pHead=(PABC)realloc(pHead, 2*len*sizeof(ABC)); //报错：realloc():invalib pointer
             				memset(pHead+len, 0, len * sizeof(ABC));
 					len*=2;
 				}
