@@ -22,65 +22,73 @@
  */
 # include <stdio.h>
 # include <stdlib.h>
-# include <string.h>
 
-# define N 4
+# define N 4		//4位数
 
-void get4nums(int *);
-void maxchange(int *);
-void subtract(int *);
-int equal(int *);
+/*******函数声明*********/
+void get4nums(int *);	//输入四位数并将每一位单独放入内存
+void maxchange(int *);	//4个数字排序，并且加起来变成"1个数"
+void subtract(int *);	//“变成”最小数，然后让max-min
+int equal(int *);	//判断是否相等，返回标志位NE
 
 
 int main(void)
 {
-	int NE=1;
-	int times=0;
-	int* num_4 = (int*)malloc(sizeof(int)*N);
-	get4nums(num_4);
-	while(NE==1) //不相等就循环
+	int NE=1;	//not equal标志位
+	int times=0;	//记录变换次数，最后输出
+	int* num_4 = (int*)malloc(sizeof(int)*N); //4位数分开存
+
+	get4nums(num_4);//获取输入
+
+	while(NE==1) 	//若不等于6174就循环
 	{
 		++times;
 		maxchange(num_4);
 		subtract(num_4);
 		NE = equal(num_4); //判断是否等于6174
 	}
+
 	printf("%d\n",times);
 	return 0;
 }
+
 void get4nums(int* num_4)
 {
-	int i;
-	char c;
-	int  RE=1;
+	int i;		//4次
+	char c;		//每一位按字符接受：getchar()
+	int  RE=1;	//输入0的标志位：redo
+	
 	printf("请输入一个4位数(0不算数)：");
 	
-	while(1 == RE)
+	while(1 == RE)	//检测到0就重输
 	{
-		for(i=0; i<N; i++)
+		for(i=0; i<N; i++)	//循环4次
 		{
 			c=getchar();
-			switch(c)
+
+			switch(c)	//对c做判断，并给内存赋值
 			{
-				case 48:printf("您输入了0,请重新输入:");RE=1;break;
-				case 49:num_4[i]=1;break;
-				case 50:num_4[i]=2;break;
-				case 51:num_4[i]=3;break;
-				case 52:num_4[i]=4;break;
-				case 53:num_4[i]=5;break;
-				case 54:num_4[i]=6;break;
-				case 55:num_4[i]=7;break;
-				case 56:num_4[i]=8;break;
-				case 57:num_4[i]=9;break;
+				case 48 : printf("您输入了0,请重新输入:"); RE = 1; break;
+				case 49 : num_4[i]=1;break;
+				case 50 : num_4[i]=2;break;
+				case 51 : num_4[i]=3;break;
+				case 52 : num_4[i]=4;break;
+				case 53 : num_4[i]=5;break;
+				case 54 : num_4[i]=6;break;
+				case 55 : num_4[i]=7;break;
+				case 56 : num_4[i]=8;break;
+				case 57 : num_4[i]=9;break;
 			}
-			RE=0;
+			RE = 0;
 		}
 	}
 }
+
 void maxchange(int* num_4)
 {
-	int i,j;
-	int temp;
+	int i, j, temp;
+	
+	//冒泡排序
 	for(i=0; i<N-1; i++)
 		for(j=0; j<N-1-i; j++)
 		{
@@ -91,19 +99,14 @@ void maxchange(int* num_4)
 				num_4[j+1] = temp;
 			}
 		}
-	/*printf("maxnum_4:\n");
-	for(i=0; i<N; i++)
-	{
-		printf("%d",num_4[i]);
-	}
-	printf("\n");*/
 }
+
 void subtract(int * num_4)
 {
-	int i,j;
-	int temp;
+	int i, j, temp;
 	int maxnum=0, minnum=0, differ;
-	int* _num =(int*)malloc(sizeof(int)*4); 
+	int* _num =(int*)malloc(sizeof(int)*4);
+
 	//复制
 	for(i=0; i<N; i++)
 	{
@@ -121,23 +124,16 @@ void subtract(int * num_4)
 				_num[j+1] = temp;
 			}
 		}
-	/*//输出查看：
-	printf("min_num:\n");
-	for(i=0; i<N; i++)
-	{
-		printf("%d",_num[i]);
-	}
-	printf("\n");*/
 
-	//把数组变成1个数字：加起来
+	//把数组变成1个数字：每一位加权和
 	for(i=0; i<N; i++)
 	{
 		maxnum+=num_4[i];
 		maxnum*=10;
 	}
-	maxnum/=10; //上面把最后的个位也乘了10，这里除掉
+	maxnum/=10; //上面把最后的个位也乘了10，所以这里除掉
 	
-	//把“最小值数组”变成1个数字
+	//把“最小值数组”变成1个数字：加权和
 	for(i=0; i<N; i++)
 	{
 		minnum+=_num[i];
@@ -154,13 +150,6 @@ void subtract(int * num_4)
 		num_4[i]=differ%10;
 		differ/=10;
 	}
-	/*//输出查看
-	printf("输出查看\n");
-	for(i=0; i<N; i++)
-	{
-		printf("%d",num_4[i]);
-	}
-	printf("\n");*/
 }
 
 int equal(int* num_4)
@@ -168,6 +157,8 @@ int equal(int* num_4)
 	int NE=1;
 	int i;
 	int arr[4]={6,1,7,4};
+
+	//逐位比较：
 	for(i=0; i<N; i++)
 	{
 		if(num_4[i] != arr[i])
@@ -176,7 +167,9 @@ int equal(int* num_4)
 			break;
 		}
 		else
+		{
 			NE=0;
+		}
 	}
 	return NE;
 }
