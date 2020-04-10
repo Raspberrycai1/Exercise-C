@@ -38,7 +38,7 @@ int main(void)
 	int times=0;	//记录变换次数，最后输出
 	int* num_4 = (int*)malloc(sizeof(int)*N); //4位数分开存
 
-	get4nums(num_4);//获取输入
+	get4nums(num_4);	//获取输入
 
 	while(NE==1) 	//若不等于6174就循环
 	{
