@@ -1,4 +1,5 @@
 //scanf读取一个用空格分隔的 任意位数的整数(int)
+//http://blog.sina.com.cn/s/blog_cfb724900102wug8.html
 
 # include <stdio.h>
 # include <ctype.h>//isdigit
