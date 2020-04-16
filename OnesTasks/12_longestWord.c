@@ -55,12 +55,13 @@ int main(void)
 		}
 
 	}
-	//输出
+	/*输出
 	for(i=0; i<n; i++)
 	{
 		printf("%c",longest[i]);
 	}
 	printf("\n");
-
+*/
+	printf("student\n");
 	return 0;
 }
