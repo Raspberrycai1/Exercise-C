@@ -1,3 +1,7 @@
+/*失败
+ * 12345 把5个数分别读到变量里，用scanf不行？
+ */
+
 # include <stdio.h>
 # include <stdlib.h>
 

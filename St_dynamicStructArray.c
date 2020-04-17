@@ -22,9 +22,11 @@ int main(void)
 	printf("请输入学生的个数:\n");
 	printf("len = ");
 	scanf("%d",&len);
+	
 	//分配了一块连续的内存？每一个元素是struct Student类型
 	pArr = (struct Student *)malloc(sizeof(struct Student)*len);
 	//pArr是这个结构体数组的名字/; pArr[0]是第一个元素 
+	
 	for (i=0; i<len; i++)
 	{
 		printf("请输入第%d个学生的信息：",i+1);
