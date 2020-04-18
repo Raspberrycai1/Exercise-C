@@ -12,14 +12,22 @@ Fans 喜欢图形，而且喜欢把图形倒过来欣赏。有一次，他看见
 3
 样例输出
 1 4 6 4 1
+ 1 3 3 1
+  1 2 1
+   1 1
+    1
+1 2 1
+ 1 1
+  1
+
+1 4 6 4 1
 1 3 3 1
 1 2 1
 1 1
 1
 1 2 1
 1 1
-1
-************************/
+1***********************/
 /*杨辉三角
  * 1. 每个数等于它上方两数之和
  * 2. 每行数字左右对称，由1开始逐渐变大
@@ -29,49 +37,110 @@ Fans 喜欢图形，而且喜欢把图形倒过来欣赏。有一次，他看见
  * 6. 第n行的第m个数和第n-m+1个数相等
  * 7. 每个数字等于上一行的左右两个数字之和：即第n+1行的第i个数等于第n行的第i-1个数和第i个数之和，可由此写出整个杨辉三角
  *
- * C(5,2)=C(n,k)=5x4/2!
- * C(5,3)=5x4x3/3!
- * C(5,4)=C(5,1)=5/1!
+ * C(5,0)= 1
+ * C(5,1)= 5/1! = 5
+ * C(5,2)= C(n,k)=5x4/2! = 10
+ * C(5,3)= 5x4x3/3! = 10
+ * C(5,4)= C(5,1)=5/1! = 5
+ * C(5,5)= C(5,0)= 1
  */
 /*
- * 1.读输入(行数)放入一块内存
+ * 1.读用户输入(行数)放入一个二维数组
  * 2.根据行数计算数字，放入内存
  * 3.倒序输出
  */
 # include <stdio.h>
-# include <malloc.h>
+# include <stdlib.h>	//malloc
+# include <string.h>	//memset
 
-int* getRows(void);
-int** calDelta(int *);
-void rePrint(int**);
+void output (int);
 
 int main(void)
 {
-	int* pRow = NULL;
-	int** adr_of_Arr = NULL;
+	char c;
+	int rows[10]={0}, i=0;
+
+	printf("请输入行数：\n");
+	while((c=getchar())!='\n')
+	{
+		ungetc(c,stdin);//把c返回输入流
+		scanf("%d",&rows[i++]);
+		scanf("%*c");	//吸收回车
+	}
+
+	//输出：
+	for(i=0; i<10; i++)
+	{
+		output(rows[i]);
+	}
 	
-	pRow = getRows();
-
-
 	return 0;
 }
 
-int* getRows(void)
+void output(int N)
 {
-	int * pRow = (int*)malloc(sizeof(int)*10);
-	int i=0;
-	char c;
-
-	while((c=getchar())!='\n')
+	if(0 == N)
 	{
-		scanf("%d",&pRow[i++]);
-		char Enter=getchar();
+		return;
+	}
+	//定义行首地址/指针数组
+	int* * prows = (int* *)malloc(sizeof(int*)*N);
+	//定义每行内存空间
+	for(int n=0; n<N; n++)
+	{
+		prows[n] = (int *)malloc(sizeof(int)*(n+1));
+	}
+	
+	//正杨辉三角赋值
+	int address =0;
+	for(int i=0; i<N; i++)//3,2,1
+	{
+		address += i;
+		*((int*)prows+address) = 1; //每行第一个数=1
+		
+		//计算第1个后面的数
+		for(int j=1; j<=i; j++)
+		{
+			//分子
+			int product = 1; //积
+			int decrease = i; //每次减1
+			for(int k=1; k<=j; k++)//分子有几个数相乘
+			{
+				product *= decrease--;
+			}
+			//分母
+			int factorial = 1;//阶乘
+			for(int lessen=j; lessen>0; lessen--)
+			{
+				factorial *= lessen;
+			}
+			*((int*)prows+address+j)=product/factorial;
+		}
+	}
+	//printf("输出查看二维数组\n");
+	address = 0;
+	for(int i=0; i<N; i++)
+	{
+		//printf("第%d行:\n",i);
+		address += i;
+		for(int j=0; j<=i; j++)
+		{
+			printf("%d ",*((int*)prows+address+j));
+			//printf("prows[%d][%d]=%d\n",i,j,*((int*)prows+adress+j));
+		}
+		printf("\n");
 	}
 
-	for(i=0; i<10; i++)
+	//把prows反序输出
+	printf("反序输出:\n");
+	for(int i=N-1; i>=0; i--)
 	{
-		printf("%d",pRow[i]);
+		for(int j=0; j<i; j++)
+		{
+			printf("prows[%d][%d]=%d ",i,j,*((int*)prows[i]+j));
+		}
+		printf("\n");
 	}
-
-	return pRow;
 }
+	
+
