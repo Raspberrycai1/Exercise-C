@@ -47,7 +47,7 @@ Fans 喜欢图形，而且喜欢把图形倒过来欣赏。有一次，他看见
 /*
  * 1.读用户输入(行数)放入一个二维数组
  * 2.根据行数计算数字，放入内存
- * 3.倒序输出
+ * 3.倒序输出:前n行共[(1+n)n]/2个数，倒着取地址打印
  */
 # include <stdio.h>
 # include <stdlib.h>	//malloc
@@ -117,7 +117,7 @@ void output(int N)
 			*((int*)prows+address+j)=product/factorial;
 		}
 	}
-	//printf("输出查看二维数组\n");
+	/*//printf("输出查看二维数组\n");
 	address = 0;
 	for(int i=0; i<N; i++)
 	{
@@ -129,18 +129,30 @@ void output(int N)
 			//printf("prows[%d][%d]=%d\n",i,j,*((int*)prows+adress+j));
 		}
 		printf("\n");
-	}
+	}*/
 
 	//把prows反序输出
-	printf("反序输出:\n");
-	for(int i=N-1; i>=0; i--)
+	//printf("反序输出:\n");
+	int spacenum=1;
+	for(int address=((N+1)*N)/2-1; address>=0; address--)//address初值是最后一个元素的偏移量,基地址是prows
 	{
-		for(int j=0; j<i; j++)
+		//printf("第%d行：\n",N);
+		//printf("address=%d\n",address);
+		printf("%d ",*((int*)prows+address));
+		
+		if(address+N == ((N+1)*N)/2) //第N行有N个数，address减完N之后，代表读完第N行，输出换行
 		{
-			printf("prows[%d][%d]=%d ",i,j,*((int*)prows[i]+j));
+			printf("\n");
+			N = N-1;
+			//输出空格
+			for(int s=1; s<=spacenum; s++)
+			{
+				printf(" ");
+			}
+			spacenum++;
 		}
-		printf("\n");
 	}
+	printf("\n");
 }
 	
 
