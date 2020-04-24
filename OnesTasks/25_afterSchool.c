@@ -74,7 +74,7 @@ int main(void)
 		switch(*((int*)data+i*2))
 		{
 			case 0: MingRun += *((int*)data+i*2+1);break;//道路
-			case 1: {
+			case 1: {//出发时是绿灯
 					if((*((int*)data+i*2+1)>MingRun))//到达时还是红灯
 					{
 						MingRun+=*((int*)data+i*2+1)-MingRun;
