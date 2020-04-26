@@ -55,6 +55,7 @@ int main(void)
 			else if(c>='w'&&c<='z')
 				c='9';
 		}
+		//其他不变
 		buff[i++]=c;
 	}
 	total = i;
