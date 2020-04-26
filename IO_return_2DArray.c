@@ -1,6 +1,8 @@
+//二维数组
 /*Max函数返回一个二维数组，求出一个二维数组各行的最大值以及所在位置
 https://blog.csdn.net/robert_chen1988/article/details/53548848
- ******/
+*/
+
 # include <stdio.h>
 # include <stdlib.h> //malloc,free
 

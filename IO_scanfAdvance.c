@@ -1,3 +1,5 @@
+//scanf高级用法
+
 /*
 #include<stdio.h>
 int arr[10];
