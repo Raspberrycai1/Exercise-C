@@ -68,6 +68,7 @@ attack 1 1
 # include <stdio.h>
 # include <stdlib.h>
 # include <stdbool.h>
+# include <string.h>
 
 typedef struct minions
 {
@@ -84,10 +85,12 @@ typedef struct player	//玩家
 }PLAYER;
 
 /*************声明函数***********/
-bool summon(PLAYER*);	//召唤：链表插入
-void attack(PLAYER*,PLAYER*,PLAYER*);	//攻击
+bool summon(PLAYER*,int,int,int);		//召唤：链表插入
+void attack(PLAYER*,PLAYER*,PLAYER*,int,int);	//攻击
 PLAYER* end(PLAYER*,PLAYER*,PLAYER*);		//换人：指向另一个结构体
 bool delete_minion(PMINIONS pHead, int pos);
+void traverse_list(PMINIONS pHead);
+void split_opcode(char * string,char** oprands);
 /*******************************/
 
 int main(void)
@@ -112,35 +115,52 @@ int main(void)
 	
 	printf("请输入操作次数：");
 	scanf("%d",&operations);
+	char c=getchar();//吸收回车
 	
 	//for循环接收指令并执行相应函数
 	for(int i=0; i<8; i++)
 	{
-		char opcode[10];	//操作码
-		scanf("%s",opcode);	//读操作码
+		char string[20];
+		char* oprands[4];
+		int j=0;
+
+		//while('\n'!=(string[j++]=getchar()));//读入一条操作
+		scanf("%s",string);
 		
-		if("summon" == opcode)
+		printf("检查输入命令：%s\n",string);
+		split_opcode(string,oprands);
+		
+		printf("查看输入的操作码：%s\n",(char*)oprands[0]);		
+		if("summon" == (char*)oprands[0])
 		{
-			summon(pcurr);
+			printf("执行summon");
+			//summon(pcurr,pos,atta,health);
 		}
-		else if("attack" == opcode)
+		else if("attack" == (char*)oprands[0])
 		{
-			attack(pcurr,p1,p2);
+			printf("执行attack");
+			//attack(pcurr,p1,p2,pos,atta);
 		}
-		else if("end" == opcode)
+		else if("end" == (char*)oprands[0])
 		{
+			printf("执行end");
 			end(pcurr,p1,p2);
 		}
 	}
+		//输出：
+		//1.判断胜负
+		if(p1->hero && p2->hero)
+			printf("0尚未结束\n");
+		printf("p1 hero HP:%d\n",p1->hero);
+		traverse_list(p1->minions);
+		printf("p2 hero HP:%d\n",p2->hero);
+		traverse_list(p2->minions);
 	return 0;
 }
-bool summon(PLAYER* pcurr)//插入节点
+bool summon(PLAYER* pcurr,int pos,int attack, int health)//插入节点
 {
-	int pos,attack,health;
 	int i = 0;
 	PMINIONS p = pcurr->minions;
-
-	scanf("%d %d %d", &pos, &attack, &health);
 	
 	while(NULL != p && i<pos-1)
 	{
@@ -164,11 +184,8 @@ bool summon(PLAYER* pcurr)//插入节点
 	
 	return true;
 }
-void attack(PLAYER* pcurr,PLAYER* p1, PLAYER* p2)//谁伤害谁
+void attack(PLAYER* pcurr,PLAYER* p1, PLAYER* p2,int pos1,int pos2)//谁伤害谁
 {
-	int pos1, pos2;
-	scanf("%d %d", &pos1, &pos2);
-
 	if(pcurr == p1)//p1的pos1攻击p2的pos2
 	{
 		((p2->minions)+pos2)->health -= ((p1->minions)+pos1)->attack;
@@ -215,4 +232,29 @@ PLAYER* end(PLAYER* pcurr,PLAYER* p1,PLAYER* p2)
 		pcurr = p1;
 
 	return pcurr;
+}
+void traverse_list(PMINIONS pHead)
+{
+	PMINIONS p = pHead->pNext;
+	while(p!= NULL)
+	{
+		printf("%d %d\n",p->position,p->health);
+		p=p->pNext;
+	}
+	printf("_\n");
+	return;
+}
+void split_opcode(char * string,char** oprands)
+{
+	int i=1;
+	char *delim = " ";
+	char *p;
+	oprands[0]=strtok(string,delim);
+	//printf("第一字段：%s _\n",strtok(string, delim));
+	while((p = strtok(NULL, delim)))
+	{
+		oprands[i]=p;
+		//printf("%s_\n",(char*)oprands[i]);
+		i++;
+	}
 }
